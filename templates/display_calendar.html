@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+        <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>{{ calendar.name }}</title>
 </head>
 <body>
-    <h2>{{ calendar.name }}</h2>
-    <ul>
-    {% for event in events %}
-        <li>{{event.name}} at {{ event.location }} on {{ event.datetime }}</li>
-    {% endfor %}
-    </ul>
+    <div class="container">
+        <h2>{{ calendar.name }}</h2>
+        <ul>
+        {% for event in events %}
+            <li>{{event.name}} at {{ event.location }} on {{ event.datetime }}</li>
+        {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
