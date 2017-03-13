@@ -16,7 +16,8 @@ def gen_data():
     ucsd = Campus(name="UCSD")
     ucsd.save()
 
-    UserProfile(user_id=test_user.id, main_campus=ucsb).save()
+    test_profile = UserProfile(user_id=test_user.id, main_campus=ucsb)
+    test_profile.save()
 
     ucsb_cal = CCalendar(name="UCSB Event Calendar", campus=ucsb)
     ucsb_cal.save()
@@ -25,9 +26,14 @@ def gen_data():
     ucsd_cal = CCalendar(name="UCSD Event Calendar", campus=ucsd)
     ucsd_cal.save()
 
-    org1 = Organization(name="Laughology", campus=ucsb, owner=test_user)
+    org1 = Organization(name="Laughology", campus=ucsb)
     org1.save()
-    org2 = Organization(name="Basketball", campus=ucsb, owner=test_user)
+    org1.administrators.add(test_user)
+    org1.save()
+
+    org2 = Organization(name="Basketball", campus=ucsb)
+    org2.save()
+    org2.administrators.add(test_user)
     org2.save()
 
     event1 = Event(name="Funny Show",

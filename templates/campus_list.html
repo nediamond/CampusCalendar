@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>{{ calendar.name }}</title>
+    <title>Campus List</title>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -19,27 +19,24 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="/campus_list/">Campus List</a></li>
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/campus_list/">Campus List</a></li>
             <li><a href="/my_orgs/">My Orgs</a></li>
             <li><a href="/logout/">Log Out</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    <br><br><br> {# Front end engineers needed #}
-    <div class="container well col-sm-8 col-sm-offset-2"  style="text-align:center">
-        <h1>{{ calendar.name }}</h1>
+    <br><br><br><br>
+    <div class="container well col-sm-4 col-sm-offset-4" style="text-align:center">
+        <h1>Campus List</h1>
         <br>
-        <table class="table table-striped" style="font-size:13pt">
-            <th style="text-align:center">Event</th>
-            <th style="text-align:center">Hosted by</th>
-        {% for event in events %}
-            <tr>
-                <td>{{event.name}} at {{ event.location }} on {{ event.datetime }}</td>
-                <td>{{ event.organization.name }}</td>
-            </tr>
-        {% endfor %}
+        <table class="table table-striped" style="font-size:12pt">
+            {% for campus in campuses %}
+                <tr><td>
+                <a href="/{{ campus.id }}/">{{ campus.name }}</a>
+                </td></tr>
+            {% endfor %}
         </table>
     </div>
 </body>

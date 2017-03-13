@@ -24,7 +24,7 @@ class CCalendar(models.Model):
 class Organization(models.Model):
     name = models.TextField(max_length=120, null=False, blank=False)
     campus = models.ForeignKey(Campus, unique=False)
-    owner = models.ForeignKey(User, unique=False)
+    administrators = models.ManyToManyField(User)
     # Todo: add org img
 
     class Meta:
@@ -49,5 +49,4 @@ class Event(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     main_campus = models.ForeignKey(Campus, unique=False)
-    administrator_of = models.ManyToManyField(Organization)
 

@@ -7,7 +7,10 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^login$', views.login_view),
-    url(r'^logout$', views.logout_view),
+    url(r'^logout/$', views.logout_view),
     url(r'^(?P<campus_id>[0-9]+)/$', views.show_calendar),
-    url(r'^(?P<campus_id>[0-9]+)/create_event/$', views.create_event),
+    url(r'^campus_list/', views.campus_list),
+    url(r'^my_orgs/', views.user_orgs),
+    url(r'^(?P<org_id>[0-9]+)/create_event/$', views.create_event),
+    url(r'^(?P<org_id>[0-9]+)/submit_event$', views.submit_event),
 ]
