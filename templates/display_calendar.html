@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ calendar.name }}</title>
+</head>
+<body>
+    <h2>{{ calendar.name }}</h2>
+    <ul>
+    {% for event in events %}
+        <li>{{event.name}} at {{ event.location }} on {{ event.datetime }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
