@@ -1,12 +1,15 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
 
 from models import *
+
+admin.site.unregister(Group)
 
 @admin.register(Campus)
 class CampusAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
 
-@admin.register(CCalendar)
+@admin.register(CampusCalendar)
 class CCalendarAdmin(admin.ModelAdmin):
     list_display = ('id', 'campus', 'name')
 

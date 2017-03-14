@@ -10,7 +10,8 @@ class Campus(models.Model):
     def __unicode__(self):
         return self.name
 
-class CCalendar(models.Model):
+
+class CampusCalendar(models.Model):
     name = models.TextField(max_length=120, null=False, blank=False)
     campus = models.ForeignKey(Campus, unique=False)
 
@@ -38,7 +39,7 @@ class Event(models.Model):
     name = models.TextField(max_length=120, null=False, blank=False)
     datetime = models.DateTimeField()
     location = models.TextField(max_length=250, null=False, blank=False) # Maybe a location-type specific field instead of text
-    calendar = models.ForeignKey(CCalendar, unique=False)
+    calendar = models.ForeignKey(CampusCalendar, unique=False)
     organization = models.ForeignKey(Organization, unique=False)
     # Todo: add event img
 

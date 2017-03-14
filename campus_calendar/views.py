@@ -42,7 +42,7 @@ def logout_view(request):
 @login_required
 def show_calendar(request, campus_id):
     # Not the best way to decide this, might need a 'main_calendar' field
-    main_calendar = CCalendar.objects.filter(campus_id=campus_id).first()
+    main_calendar = CampusCalendar.objects.filter(campus_id=campus_id).first()
     events = Event.objects.filter(calendar=main_calendar).order_by('datetime')
     return render(request, 'display_calendar.html', {'calendar': main_calendar, 'events': events})
 
@@ -76,7 +76,7 @@ def submit_event(request, org_id):
     org = Organization.objects.filter(id=org_id).first()
     if not org or request.user not in org.administrators.all():
         return HttpResponseForbidden()
-    main_calendar = CCalendar.objects.filter(campus=org.campus).first()  # See calendar comment up there ^^
+    main_calendar = CampusCalendar.objects.filter(campus=org.campus).first()  # See calendar comment up there ^^
 
     Event(name=request.POST['name'],
           location=request.POST['location'],
@@ -85,3 +85,4 @@ def submit_event(request, org_id):
           organization=org).save()
 
     return redirect('/')
+
