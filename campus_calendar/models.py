@@ -26,7 +26,7 @@ class Organization(models.Model):
     name = models.TextField(max_length=120, null=False, blank=False)
     campus = models.ForeignKey(Campus, unique=False)
     administrators = models.ManyToManyField(User)
-    # Todo: add org img
+    graphic = models.ImageField()
 
     class Meta:
         unique_together = (('name', 'campus',),)
@@ -41,7 +41,7 @@ class Event(models.Model):
     location = models.TextField(max_length=250, null=False, blank=False) # Maybe a location-type specific field instead of text
     calendar = models.ForeignKey(CampusCalendar, unique=False)
     organization = models.ForeignKey(Organization, unique=False)
-    # Todo: add event img
+    graphic = models.ImageField()
 
     def __unicode__(self):
         return self.name

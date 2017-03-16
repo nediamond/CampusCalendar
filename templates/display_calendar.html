@@ -33,12 +33,14 @@
         <h1>{{ calendar.name }}</h1>
         <br>
         <table class="table table-striped" style="font-size:13pt">
+            <th></th>
             <th style="text-align:center">Event</th>
             <th style="text-align:center">Location</th>
             <th style="text-align:center">Date</th>
             <th style="text-align:center">Hosted by</th>
         {% for event in events %}
             <tr>
+                <td>{{ event.image }}</td>
                 <td>{{ event.name }}</td>
                 <td>{{ event.location }}</td>
                 <td>{{ event.datetime }}</td>
@@ -52,7 +54,7 @@
       <div class="container-fluid col-sm-offset-8">
         <div class="navbar-header">
             <a href="https://spikeball.com" class="navbar-brand">
-                Powered by:
+                Powered by
             </a>
         </div>
         <a href="https://spikeball.com">
