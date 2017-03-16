@@ -3,32 +3,37 @@ from django.http import HttpResponseForbidden
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
+from datetime import datetime
 
 from models import *
 
-# Todo: create_event view
-# Todo: Add serialized/json event view for dynamic calendars
+# Todo: Add serialized/json event view for dynamic calendars?
 
 
-# Root view, shows main calendar of main campus if logged in
+# Todo: Root view should should show campus select if no cookie set, else calendar based on cookie# Root view, shows main calendar of main campus if logged in
 # Otherwise, login screen
 def index(request):
-    if request.user.is_authenticated:
-        user_profile = UserProfile.objects.filter(user=request.user).first()
-        return show_calendar(request, user_profile.main_campus.id)
+    #if request.user.is_authenticated:
+    cid = request.session.get('cid', False)
+    if not cid:
+        return campus_list(request)
+    return show_calendar(request, cid)
 
-    return render(request, 'login.html')
+    #return render(request, 'login.html')
 
 
 # Login data submission (POST) view, redirects to root url
 @csrf_protect
-def login_view(request):
-    username = request.POST['username']
-    password = request.POST['password']  # Plaintext password submission is an issue USE HTTPS
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        login(request, user)
-    return redirect('/')
+def login_post_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']  # Plaintext password submission is an issue USE HTTPS
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+        return redirect('/')
+    else:
+        return redirect('/login/')
 
 
 @login_required
@@ -37,17 +42,22 @@ def logout_view(request):
     return redirect('/')
 
 
-# Todo: discuss whether users should have to be logged in to access this page
+def login_page(request):
+    return render(request, 'login.html')
+
 # Displays the main calendar for a given campus
-@login_required
+#@login_required
 def show_calendar(request, campus_id):
     # Not the best way to decide this, might need a 'main_calendar' field
+    # Or maybe theres just one calendar per university in which case they can be the same object
     main_calendar = CampusCalendar.objects.filter(campus_id=campus_id).first()
-    events = Event.objects.filter(calendar=main_calendar).order_by('datetime')
+    events = Event.objects.filter(calendar=main_calendar, datetime__gte=datetime.now()).order_by('datetime')
+
+    if not request.session.get('cid', False):
+        request.session['cid'] = campus_id
     return render(request, 'display_calendar.html', {'calendar': main_calendar, 'events': events})
 
 
-@login_required
 def campus_list(request):
     campuses = Campus.objects.all()
     return render(request, 'campus_list.html', {'campuses':campuses})
