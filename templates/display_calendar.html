@@ -5,6 +5,11 @@
     <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>{{ calendar.name }}</title>
+    <style>
+        .table tbody>tr>td{
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -32,15 +37,15 @@
     <div class="container well col-sm-8 col-sm-offset-2"  style="text-align:center">
         <h1>{{ calendar.name }}</h1>
         <br>
-        <table class="table table-striped" style="font-size:13pt">
-            <th></th>
+        <table class="table table-striped" style="font-size:13pt;">
+            <th> </th>
             <th style="text-align:center">Event</th>
             <th style="text-align:center">Location</th>
             <th style="text-align:center">Date</th>
             <th style="text-align:center">Hosted by</th>
         {% for event in events %}
             <tr>
-                <td>{{ event.image }}</td>
+                <td><img src="{{ MEDIA_URL }}events/{{ event.id }}.png" style="max-width:150px;height:auto;"></td>
                 <td>{{ event.name }}</td>
                 <td>{{ event.location }}</td>
                 <td>{{ event.datetime }}</td>

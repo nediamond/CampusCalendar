@@ -1,5 +1,8 @@
 # Run from within Django shell
+from django.core.files import File
 from models import *
+import urllib
+PLACEHOLDER = urllib.urlopen("http://placehold.it/300/300")
 
 
 def gen_data():
@@ -42,11 +45,15 @@ def gen_data():
                    calendar=ucsb_cal,
                    organization=org1)
     event1.save()
+    event1.graphic.save(str(event1.id)+".png", File(urllib.urlopen("http://placehold.it/300/300")))
+    event1.save()
 
     event2 = Event(name="BBall Game",
                    datetime="2017-03-16 16:00",
                    location="BBall Courts",
                    calendar=ucsb_cal,
                    organization=org2)
+    event2.save()
+    event2.graphic.save(str(event2.id)+".png", File(urllib.urlopen("http://placehold.it/305/305")))
     event2.save()
 
