@@ -30,7 +30,7 @@
     <br><br><br><br>
     <div class="container well col-sm-6 col-sm-offset-3">
         <h1 style="text-align:center">Create Event</h1>
-        <form action="/{{ org_id }}/submit_event" method="POST">
+        <form action="/{{ org_id }}/submit_event" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="name"><h4>Event Name</h4></label>
@@ -41,6 +41,9 @@
                     <br>
                     <label for="datetime"><h4>Start Date/Time</h4></label>
                     <input name="datetime" type="datetime-local" class="form-control" id="datetime" required>
+                    <br>
+                    <label for="graphic"><h4>Event Image</h4></label>
+                    <input name="graphic" type="file" class="form-control" id="graphic">
                     <br>
 {#                      <br><br> * denotes a required field#}
                 </div>

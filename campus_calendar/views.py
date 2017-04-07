@@ -3,23 +3,19 @@ from django.http import HttpResponseForbidden
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
+from django.core.files import File
 from datetime import datetime
 
 from models import *
 
 # Todo: Add serialized/json event view for dynamic calendars?
 
-
-# Todo: Root view should should show campus select if no cookie set, else calendar based on cookie# Root view, shows main calendar of main campus if logged in
-# Otherwise, login screen
+# Root view, shows main calendar or campus select if no campus cookie set
 def index(request):
-    #if request.user.is_authenticated:
     cid = request.session.get('cid', False)
     if not cid:
         return campus_list(request)
     return show_calendar(request, cid)
-
-    #return render(request, 'login.html')
 
 
 # Login data submission (POST) view, redirects to root url
@@ -27,7 +23,7 @@ def index(request):
 def login_post_view(request):
     if request.method == 'POST':
         username = request.POST['username']
-        password = request.POST['password']  # Plaintext password submission is an issue USE HTTPS
+        password = request.POST['password']  # Plaintext password submission is an issue, FORCE HTTPS
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
@@ -45,8 +41,8 @@ def logout_view(request):
 def login_page(request):
     return render(request, 'login.html')
 
+
 # Displays the main calendar for a given campus
-#@login_required
 def show_calendar(request, campus_id):
     # Not the best way to decide this, might need a 'main_calendar' field
     # Or maybe theres just one calendar per university in which case they can be the same object
@@ -88,11 +84,17 @@ def submit_event(request, org_id):
         return HttpResponseForbidden()
     main_calendar = CampusCalendar.objects.filter(campus=org.campus).first()  # See calendar comment up there ^^
 
-    Event(name=request.POST['name'],
-          location=request.POST['location'],
-          datetime=request.POST['datetime'],
-          calendar=main_calendar,
-          organization=org).save()
+    new_event = Event(name=request.POST['name'],
+                      location=request.POST['location'],
+                      datetime=request.POST['datetime'],
+                      calendar=main_calendar,
+                      organization=org)
+    new_event.save()
+
+    if 'graphic' in request.FILES:
+        # this may be vulnerable to js injection
+        new_event.graphic.save(request.FILES['graphic'].name, File(request.FILES['graphic']))
+        new_event.save()
 
     return redirect('/')
 

@@ -49,7 +49,7 @@
             <th style="text-align:center">Hosted by</th>
         {% for event in events %}
             <tr>
-                <td><img src="{{ MEDIA_URL }}events/{{ event.id }}.png" style="max-width:150px;height:auto;"></td>
+                <td><img src="{{ MEDIA_URL }}{{ event.graphic.name }}" style="max-width:150px;height:auto;"></td>
                 <td>{{ event.name }}</td>
                 <td>{{ event.location }}</td>
                 <td>{{ event.datetime }}</td>
