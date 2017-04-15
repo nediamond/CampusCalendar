@@ -1,35 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <meta charset="UTF-8">
-    <title>Create Event</title>
-</head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">Campus Calendar</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-{#            <li><a href="/">Home</a></li>#}
-            <li><a href="/campus_list/">Campus List</a></li>
-            <li><a href="/my_orgs/">My Orgs</a></li>
-            <li><a href="/logout/">Log Out</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-    <br><br><br><br>
-    <div class="container well col-sm-6 col-sm-offset-3">
-        <h1 style="text-align:center">Create Event</h1>
+{% extends "base.html" %}
+
+{% block page_title %}Create Event{% endblock %}
+
+{% block default_style %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css">
+<style>
+    body {
+        background-color:#DAF0F6;
+        <!-- color:#217DC1; -->
+    }
+</style>
+{% endblock %}
+
+{% block page_style %}
+    <style>
+        .container {
+            background-color:#FFFFFF;
+            border-radius: 20px;
+            font-size:12pt;
+            padding:1.2rem;
+        }
+
+        input {
+            padding:.2rem;
+            margin-top:.5rem;
+            margin-bottom:.5rem;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container col-md-12" style="background-color:#DAF0F6">
+    <div class="container col-md-6 offset-md-3">
+        <h1 style="text-align:center">Create Event for {{ org_name}}</h1>
         <form action="/{{ org_id }}/submit_event" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
@@ -42,15 +45,15 @@
                     <label for="datetime"><h4>Start Date/Time</h4></label>
                     <input name="datetime" type="datetime-local" class="form-control" id="datetime" required>
                     <br>
-                    <label for="graphic"><h4>Event Image</h4></label>
+                    <label for="graphiac"><h4>Event Image</h4></label>
                     <input name="graphic" type="file" class="form-control" id="graphic">
                     <br>
 {#                      <br><br> * denotes a required field#}
                 </div>
-                <div class="form-group">
+                <div class="form-group text-xs-center">
                     <input type="submit"  class="btn btn-md btn-primary center-block" value="Create">
                 </div>
         </form>
     </div>
-</body>
-</html>
+    </div>
+{% endblock %}

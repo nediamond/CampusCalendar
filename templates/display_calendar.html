@@ -52,7 +52,7 @@
 {#{% block page_header %}{{ calendar.name }}{% endblock %}#}
 
 {% block content %}
-    {% for day,events in days.items %}
+    {% for day,events in days %}
         <div class="container col-md-8">
             <br>
             <h2>{{ day|date:"l n/d"}}</h2>

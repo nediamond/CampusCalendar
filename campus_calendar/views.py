@@ -56,8 +56,11 @@ def show_calendar(request, campus_id):
     days = defaultdict(list)
     for event in events:
         days[event.datetime.date()].append(event)
-
-    return render(request, 'display_calendar.html', {'calendar': main_calendar, 'days': dict(days)})
+    print days
+    days = [(v, days[v]) for v in dict(days)]
+    days = sorted(days, key=lambda x: x[0])
+    print days
+    return render(request, 'display_calendar.html', {'calendar': main_calendar, 'days': days})
 
 def campus_list(request):
     campuses = Campus.objects.all()
@@ -75,7 +78,7 @@ def create_event(request, org_id):
     org = Organization.objects.filter(id=org_id).first()
     if not org or request.user not in org.administrators.all():
         return HttpResponseForbidden()
-    return render(request, 'create_event.html', {'org_id':org.id})
+    return render(request, 'create_event.html', {'org_id': org.id, 'org_name': org.name})
 
 
 @csrf_protect
