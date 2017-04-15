@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.core.files import File
 from datetime import datetime
+from collections import defaultdict
 
 from models import *
 
@@ -51,8 +52,12 @@ def show_calendar(request, campus_id):
 
     if not request.session.get('cid', False):
         request.session['cid'] = campus_id
-    return render(request, 'display_calendar.html', {'calendar': main_calendar, 'events': events})
 
+    days = defaultdict(list)
+    for event in events:
+        days[event.datetime.date()].append(event)
+
+    return render(request, 'display_calendar.html', {'calendar': main_calendar, 'days': dict(days)})
 
 def campus_list(request):
     campuses = Campus.objects.all()
@@ -75,6 +80,7 @@ def create_event(request, org_id):
 
 @csrf_protect
 @login_required
+# Todo: tech debt, this view could probably use a django.forms.ModelForm
 def submit_event(request, org_id):
     if request.method != "POST":
         return HttpResponseForbidden()
@@ -93,6 +99,7 @@ def submit_event(request, org_id):
 
     if 'graphic' in request.FILES:
         # this may be vulnerable to js injection
+        # Todo: extract file extension and randomize filename
         new_event.graphic.save(request.FILES['graphic'].name, File(request.FILES['graphic']))
         new_event.save()
 

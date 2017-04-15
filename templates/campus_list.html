@@ -1,47 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <meta charset="UTF-8">
-    <title>Campus List</title>
-</head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">Campus Calendar</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-{#            <li><a href="/">Home</a></li>#}
-            <li class="active"><a href="/campus_list/">Campus List</a></li>
-              {% if user.is_authenticated %}
-                <li><a href="/my_orgs/">My Orgs</a></li>
-                <li><a href="/logout/">Log Out</a></li>
-              {% else %}
-                <li><a href="/login/">Log In</a></li>
-              {% endif %}
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-    <br><br><br><br>
-    <div class="container well col-sm-4 col-sm-offset-4" style="text-align:center">
-        <h1>Campus List</h1>
-        <br>
-        <table class="table table-striped" style="font-size:12pt">
-            {% for campus in campuses %}
-                <tr><td>
-                <a href="/{{ campus.id }}/">{{ campus.name }}</a>
-                </td></tr>
-            {% endfor %}
-        </table>
-    </div>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block page_title %}Campus List{% endblock %}
+
+
+{% block page_style %}
+    <style>
+        .container {
+            background-color:#FFFFFF;
+            border-radius: 20px;
+            text-align:center;
+            font-size:12pt;
+            padding:1.2rem;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container col-md-4 col-sm-4 col-sm-offset-4">
+    <h2>Campus List</h2>
+    <table class="table table-striped" style="margin:0;">
+        {% for campus in campuses %}
+            <tr><td>
+            <a href="/{{ campus.id }}/" style="color:#000000;">{{ campus.name }}</a>
+            </td></tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

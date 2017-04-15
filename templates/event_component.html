@@ -1,0 +1,23 @@
+{# 1 Parameter: event (models.Event)#}
+
+<div class="card col-md-12" data-toggle="collapse" data-target="#description_{{ event.id }}" aria-expanded="false"
+     aria-controls="description_{{ event.id }}">
+    <div class="card-block col-md-2">
+        <img style="width:inherit;" src="{{ MEDIA_URL }}{{ event.graphic.name }}" alt="Event image"
+             onclick="window.location = '{{ MEDIA_URL }}{{ event.graphic.name }}';">
+    </div>
+    <div class="card-block col-md-7">
+        <h4 class="card-title">{{ event.name }}</h4>
+        <p class="card-text">{{ event.organization.name }}</p>
+        <div class="collapse" id="description_{{ event.id }}">
+            Location: {{ event.location }}
+            <br>
+            Description anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+            squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
+            proident.
+        </div>
+    </div>
+    <div class="card-block col-md-3">
+        {{ event.datetime.time }}
+    </div>
+</div>
