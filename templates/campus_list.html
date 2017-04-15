@@ -17,11 +17,11 @@
 
 {% block content %}
 <div class="container col-md-4 col-sm-4 col-sm-offset-4">
-    <h2>Campus List</h2>
+    <h2>Select Campus</h2>
     <table class="table table-striped" style="margin:0;">
         {% for campus in campuses %}
             <tr><td>
-            <a href="/{{ campus.id }}/" style="color:#000000;">{{ campus.name }}</a>
+            <a href="/{{ campus.id }}/" style="color:#000000;"><h5>{{ campus.name }}</h5></a>
             </td></tr>
         {% endfor %}
     </table>

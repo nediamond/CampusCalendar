@@ -56,10 +56,10 @@ def show_calendar(request, campus_id):
     days = defaultdict(list)
     for event in events:
         days[event.datetime.date()].append(event)
-    print days
+
     days = [(v, days[v]) for v in dict(days)]
     days = sorted(days, key=lambda x: x[0])
-    print days
+
     return render(request, 'display_calendar.html', {'calendar': main_calendar, 'days': days})
 
 def campus_list(request):
