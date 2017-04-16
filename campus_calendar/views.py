@@ -76,6 +76,7 @@ def event_manager(request):
                                   datetime__gte=datetime.now()).order_by('datetime')
     return render(request, 'event_manger.html', {'events':events})
 
+
 @login_required
 def delete_event(request, event_id):
     event = Event.objects.filter(id=event_id).first()
