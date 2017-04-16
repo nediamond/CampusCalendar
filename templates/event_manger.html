@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block page_title %}Event Manager{% endblock %}
+
+{% block page_style %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
+    <style>
+        .container {
+            background-color:#FFFFFF;
+            border-radius: 20px;
+            font-size:12pt;
+            padding:1.2rem;
+        }
+
+        .ion {
+            font-size:25px;
+            padding:0;
+            margin:0;
+        }
+    </style>
+{% endblock %}
+
+{% block page_script %}
+<script>
+    function delete_event(event_id, event_name){
+        $('span#deleteName').text(event_name);
+        $('a#deleteLink').attr('href', '/delete_event/'+event_id+'/')
+        $('#deleteModal').modal('show');
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+    <div class="container col-sm-10 col-sm-offset-2">
+        <h2>Event Manager
+            <a href="#" class="btn btn-primary" style="float:right;">New Event</a>
+        </h2>
+        <table class="table table-striped" style="font-size:12pt; vertical-align: middle;">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Org.</th>
+                <th>Date/Time</th>
+                <th>Location</th>
+                <th>Description</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+                <tr>
+                    <td><img src="{{ MEDIA_URL }}{{ event.graphic.name }}" style="max-height:5rem;width:auto;"
+                        onclick="window.location = '{{ MEDIA_URL }}{{ event.graphic.name }}';"></td>
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.organization.name }}</td>
+                    <td>{{ event.datetime }}</td>
+                    <td>{{ event.location }}</td>
+                    <td>{{ event.description|truncatechars:50 }}</td>
+                    <td><span class="ion ion-edit" onclick="window.location='/edit/{{ event.id }}/'"></span></td>
+                    <td><span class="ion ion-trash-a" onclick="delete_event({{ event.id }},'{{ event.name }}');"></span></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+
+        <!-- Deletion Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Confirm Deletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  Are your sure you want to delete <b><span id="deleteName">Not Loaded</span></b>?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" id="deleteLink" href="#">Yes</a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock %}

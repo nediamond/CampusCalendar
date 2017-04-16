@@ -62,14 +62,26 @@ def show_calendar(request, campus_id):
 
     return render(request, 'display_calendar.html', {'calendar': main_calendar, 'days': days})
 
+
 def campus_list(request):
     campuses = Campus.objects.all()
     return render(request, 'campus_list.html', {'campuses':campuses})
 
 
 @login_required
-def user_orgs(request):
-    return render(request, 'my_orgs.html', {'orgs':request.user.organization_set.all()})
+def event_manager(request):
+    events = Event.objects.filter(organization__in=request.user.organization_set.all(),
+                                  datetime__gte=datetime.now()).order_by('datetime')
+    return render(request, 'event_manger.html', {'events':events})
+
+@login_required
+def delete_event(request, event_id):
+    event = Event.objects.filter(id=event_id).first()
+    if not event or request.user not in event.organization.administrators.all():
+        return HttpResponseForbidden()
+
+    event.delete()
+    return redirect('/event_manager/')
 
 
 @csrf_protect
