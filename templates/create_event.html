@@ -26,6 +26,10 @@
             margin-top:.5rem;
             margin-bottom:.5rem;
         }
+
+        select {
+            padding:0;
+        }
     </style>
 {% endblock %}
 
@@ -33,11 +37,18 @@
     <div class="container col-md-12" style="background-color:#DAF0F6">
     <div class="container col-md-6 offset-md-3">
         <h1 style="text-align:center">Create Event for {{ org_name}}</h1>
-        <form action="/{{ org_id }}/submit_event" method="POST" enctype="multipart/form-data">
+        <form action="/create_event" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="name"><h4>Event Name</h4></label>
                     <input name="name" type="text" class="form-control" id="name" maxlength="120" required>
+                    <br>
+                    <label for="org"><h4>Organization</h4></label>
+                    <select name="org" class="form-control">
+                        {% for org in orgs %}
+                            <option value="{{ org.id }}">{{ org.name }}</option>
+                        {% endfor %}
+                    </select>
                     <br>
                     <label for="location"><h4>Location</h4></label>
                     <input name="location" type="text" class="form-control" id="location" maxlength="250" required>
@@ -45,9 +56,13 @@
                     <label for="datetime"><h4>Start Date/Time</h4></label>
                     <input name="datetime" type="datetime-local" class="form-control" id="datetime" required>
                     <br>
-                    <label for="graphiac"><h4>Event Image</h4></label>
+                    <label for="description"><h4>Description</h4></label>
+                    <textarea name="description" class="form-control" id="description" maxlength="500"></textarea>
+                    <br>
+                    <label for="graphic"><h4>Event Image</h4></label>
                     <input name="graphic" type="file" class="form-control" id="graphic">
                     <br>
+
 {#                      <br><br> * denotes a required field#}
                 </div>
                 <div class="form-group text-xs-center">

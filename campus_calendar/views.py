@@ -4,8 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.core.files import File
+from django.utils.crypto import get_random_string
 from datetime import datetime
 from collections import defaultdict
+import os
 
 from models import *
 
@@ -84,39 +86,41 @@ def delete_event(request, event_id):
     return redirect('/event_manager/')
 
 
-@csrf_protect
-@login_required
-def create_event(request, org_id):
-    org = Organization.objects.filter(id=org_id).first()
-    if not org or request.user not in org.administrators.all():
-        return HttpResponseForbidden()
-    return render(request, 'create_event.html', {'org_id': org.id, 'org_name': org.name})
-
-
-@csrf_protect
-@login_required
 # Todo: tech debt, this view could probably use a django.forms.ModelForm
-def submit_event(request, org_id):
-    if request.method != "POST":
-        return HttpResponseForbidden()
+@csrf_protect
+@login_required
+def create_event(request):
+    if request.method == "GET":
+        orgs = Organization.objects.filter(administrators=request.user)
+        return render(request, 'create_event.html', {'orgs': orgs})
 
-    org = Organization.objects.filter(id=org_id).first()
-    if not org or request.user not in org.administrators.all():
-        return HttpResponseForbidden()
-    main_calendar = CampusCalendar.objects.filter(campus=org.campus).first()  # See calendar comment up there ^^
+    elif request.method == "POST":
+        org = Organization.objects.filter(id=int(request.POST['org'])).first()
+        if not org or request.user not in org.administrators.all():
+            return HttpResponseForbidden()
 
-    new_event = Event(name=request.POST['name'],
-                      location=request.POST['location'],
-                      datetime=request.POST['datetime'],
-                      calendar=main_calendar,
-                      organization=org)
-    new_event.save()
+        main_calendar = CampusCalendar.objects.filter(campus=org.campus).first()  # See calendar comment up there ^^
+        event_dt = datetime.strptime(request.POST['datetime'], "%Y-%m-%dT%H:%M")
 
-    if 'graphic' in request.FILES:
-        # this may be vulnerable to js injection
-        # Todo: extract file extension and randomize filename
-        new_event.graphic.save(request.FILES['graphic'].name, File(request.FILES['graphic']))
+        new_event = Event(name=request.POST['name'],
+                          location=request.POST['location'],
+                          datetime=event_dt,
+                          calendar=main_calendar,
+                          organization=org,
+                          description=request.POST['description'])
         new_event.save()
 
-    return redirect('/')
+        if 'graphic' in request.FILES:
+            _, extension = os.path.splitext(request.FILES['graphic'].name)
+            new_event.graphic.save(get_random_string(length=16)+extension, File(request.FILES['graphic']))
+            new_event.save()
+
+        return redirect('/')
+
+    else:
+        return HttpResponseForbidden()
+
+
+
+
 

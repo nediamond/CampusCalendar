@@ -51,8 +51,12 @@
         <tbody>
             {% for event in events %}
                 <tr>
-                    <td><img src="{{ MEDIA_URL }}{{ event.graphic.name }}" style="max-height:5rem;width:auto;"
-                        onclick="window.location = '{{ MEDIA_URL }}{{ event.graphic.name }}';"></td>
+                    <td>
+                        {% if event.graphic %}
+                            <img src="{{ MEDIA_URL }}{{ event.graphic.name }}" style="max-height:5rem;width:auto;"
+                            onclick="window.location = '{{ MEDIA_URL }}{{ event.graphic.name }}';">
+                        {% endif %}
+                    </td>
                     <td>{{ event.name }}</td>
                     <td>{{ event.organization.name }}</td>
                     <td>{{ event.datetime }}</td>

@@ -13,6 +13,6 @@ urlpatterns = [
     url(r'^campus_list/$', views.campus_list),
     url(r'^event_manager/$', views.event_manager),
     url(r'^delete_event/(?P<event_id>[0-9]+)/', views.delete_event),
-    url(r'^(?P<org_id>[0-9]+)/create_event/$', views.create_event),
-    url(r'^(?P<org_id>[0-9]+)/submit_event$', views.submit_event),
+    url(r'^create_event$', views.create_event),
+    url(r'^create_event/$', views.create_event),
 ]
