@@ -5,13 +5,13 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.core.files import File
 from django.utils.crypto import get_random_string
+
 from datetime import datetime
 from collections import defaultdict
 import os
 
 from models import *
 
-# Todo: Add serialized/json event view for dynamic calendars?
 
 # Root view, shows main calendar or campus select if no campus cookie set
 def index(request):
