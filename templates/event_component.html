@@ -2,11 +2,15 @@
 
 <div class="card col-md-12" data-toggle="collapse" data-target="#description_{{ event.id }}" aria-expanded="false"
      aria-controls="description_{{ event.id }}">
-    <div class="card-block col-md-2" style="padding:.5rem 0 .5rem 0;">
-        <img class="img-fluid" src="{{ MEDIA_URL }}{{ event.graphic.name }}" alt="Event image"
-             onclick="window.location = '{{ MEDIA_URL }}{{ event.graphic.name }}';">
-    </div>
-    <div class="card-block col-md-7" style="padding-left:1.2rem;">
+    {% if event.graphic %}
+        <div class="card-block col-md-2 event-img" style="padding:.5rem 0 .5rem 0;">
+            <img class="img-fluid" src="{{ MEDIA_URL }}{{ event.graphic.name }}" alt="Event image"
+                 onclick="window.location = '{{ MEDIA_URL }}{{ event.graphic.name }}';">
+        </div>
+        <div class="card-block col-md-7" style="padding-left:1.2rem;">
+    {% else %}
+        <div class="card-block col-md-7">
+    {% endif %}
         <h4 class="card-title">{{ event.name }}</h4>
         <p class="card-text">{{ event.organization.name }}</p>
         <p class="card-text">{{ event.location }}</p>
