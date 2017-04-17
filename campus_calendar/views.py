@@ -93,6 +93,8 @@ def delete_event(request, event_id):
 def create_event(request):
     if request.method == "GET":
         orgs = Organization.objects.filter(administrators=request.user)
+        if len(orgs) < 1:
+            return HttpResponseForbidden()
         return render(request, 'create_event.html', {'orgs': orgs})
 
     elif request.method == "POST":
@@ -116,12 +118,50 @@ def create_event(request):
             new_event.graphic.save(get_random_string(length=16)+extension, File(request.FILES['graphic']))
             new_event.save()
 
-        return redirect('/')
+        return redirect('/event_manager/')
 
     else:
         return HttpResponseForbidden()
 
 
+@csrf_protect
+@login_required
+def edit_event(request, event_id):
+    if request.method == "GET":
+        orgs = Organization.objects.filter(administrators=request.user)
+        event = Event.objects.filter(id=event_id).first()
+
+        if len(orgs) < 1 or not event:
+            return HttpResponseForbidden()
+
+        return render(request, 'edit_event.html', {'orgs': orgs, 'event':event})
+
+    elif request.method == "POST":
+        org = Organization.objects.filter(id=int(request.POST['org'])).first()
+        event = Event.objects.filter(id=event_id).first()
+        if not org or request.user not in org.administrators.all() or not event:
+            return HttpResponseForbidden()
+
+        event.name = request.POST['name']
+        event.location = request.POST['location']
+        event.datetime = datetime.strptime(request.POST['datetime'], "%Y-%m-%dT%H:%M")
+        event.organization = org
+        event.description = request.POST['description']
+
+        event.save()
+
+        if 'graphic' in request.FILES and request.FILES['graphic']:
+            if event.graphic:
+                event.graphic.delete()
+
+            _, extension = os.path.splitext(request.FILES['graphic'].name)
+            event.graphic.save(get_random_string(length=16)+extension, File(request.FILES['graphic']))
+            event.save()
+
+        return redirect('/event_manager/')
+
+    else:
+        return HttpResponseForbidden()
 
 
 

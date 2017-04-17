@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block page_title %}Create Event{% endblock %}
+{% block page_title %}Edit Event{% endblock %}
 
 {% block default_style %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css">
@@ -36,30 +36,41 @@
 {% block content %}
     <div class="container col-md-12" style="background-color:#DAF0F6">
     <div class="container col-md-6 offset-md-3">
-        <h1 style="text-align:center">Create Event</h1>
-        <form action="/create_event" method="POST" enctype="multipart/form-data">
+        <h1 style="text-align:center">Edit Event</h1>
+        <form action="/edit_event/{{ event.id }}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="name"><h4>Event Name</h4></label>
-                    <input name="name" type="text" class="form-control" id="name" maxlength="120" required>
+                    <input name="name" value="{{ event.name }}" type="text" class="form-control" id="name" maxlength="120" required>
                     <br>
                     <label for="org"><h4>Organization</h4></label>
                     <select name="org" class="form-control">
                         {% for org in orgs %}
-                            <option value="{{ org.id }}">{{ org.name }}</option>
+                            {% if org == event.organization %}
+                                <option selected="selected" value="{{ org.id }}">{{ org.name }}</option>
+                            {% else %}
+                                <option value="{{ org.id }}">{{ org.name }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                     <br>
                     <label for="location"><h4>Location</h4></label>
-                    <input name="location" type="text" class="form-control" id="location" maxlength="250" required>
+                    <input name="location" value="{{ event.location }}" type="text" class="form-control" id="location" maxlength="250" required>
                     <br>
                     <label for="datetime"><h4>Start Date/Time</h4></label>
-                    <input name="datetime" type="datetime-local" class="form-control" id="datetime" required>
+                    <input name="datetime" value="{{ event.datetime|date:"Y-m-d\TH:i" }}" type="datetime-local" class="form-control" id="datetime" required>
                     <br>
                     <label for="description"><h4>Description</h4></label>
-                    <textarea name="description" class="form-control" id="description" maxlength="500"></textarea>
+                    <textarea name="description" class="form-control" id="description" maxlength="500">{{ event.description }}</textarea>
                     <br>
                     <label for="graphic"><h4>Event Image</h4></label>
+                    {% if event.graphic %}
+                        <div style="float:right;padding: 0 1rem 1rem 0;">
+                        <h5>Current</h5>
+                        <img style="max-width:8rem;height:auto;" src="{{ MEDIA_URL }}{{ event.graphic.name }}" alt="Event image"
+                 onclick="window.location = '{{ MEDIA_URL }}{{ event.graphic.name }}';">
+                        </div>
+                    {% endif %}
                     <input name="graphic" type="file" class="form-control" id="graphic">
                     <br>
 

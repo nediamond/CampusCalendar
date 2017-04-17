@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^delete_event/(?P<event_id>[0-9]+)/', views.delete_event),
     url(r'^create_event$', views.create_event),
     url(r'^create_event/$', views.create_event),
+    url(r'^edit_event/(?P<event_id>[0-9]+)$', views.edit_event),
+    url(r'^edit_event/(?P<event_id>[0-9]+)/$$', views.edit_event),
 ]

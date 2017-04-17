@@ -59,14 +59,14 @@
                     </td>
                     <td>{{ event.name }}</td>
                     <td>{{ event.organization.name }}</td>
-                    <td>{{ event.datetime }}</td>
+                    <td>{{ event.datetime|date:"N j, Y" }}<br>{{ event.datetime|date:"g:i a" }}</td>
                     <td>{{ event.location }}</td>
                     <td>
                         {% if event.description %}
                         {{ event.description|truncatechars:150 }}
                         {% endif %}
                     </td>
-                    <td><span class="ion ion-edit" onclick="window.location='/edit/{{ event.id }}/'"></span></td>
+                    <td><span class="ion ion-edit" onclick="window.location='/edit_event/{{ event.id }}/'"></span></td>
                     <td><span class="ion ion-trash-a" onclick="delete_event({{ event.id }},'{{ event.name }}');"></span></td>
                 </tr>
             {% endfor %}
