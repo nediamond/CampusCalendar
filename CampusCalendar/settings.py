@@ -147,3 +147,5 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 MEDIA_ROOT = 'media/'
 MEDIA_URL = '/media/'
+
+SECURE_SSL_REDIRECT = True
