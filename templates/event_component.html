@@ -14,11 +14,7 @@
         <h4 class="card-title">{{ event.name }}</h4>
         <p class="card-text">{{ event.organization.name }}</p>
         <p class="card-text">{{ event.location }}</p>
-        <div class="collapse" id="description_{{ event.id }}">
-            {% if event.description %}
-                {{ event.description }}
-            {% endif %}
-        </div>
+        <div class="collapse" id="description_{{ event.id }}">{% if event.description %}{{ event.description }}{% endif %}</div>
     </div>
     <div class="card-block col-md-3">
         <h5>{{ event.datetime.time }}</h5>
