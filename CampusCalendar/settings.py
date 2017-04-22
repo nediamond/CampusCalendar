@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'campus_calendar',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -145,7 +146,11 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-MEDIA_ROOT = 'media/'
-MEDIA_URL = '/media/'
+AWS_STORAGE_BUCKET_NAME = "campuscalendar"
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
+MEDIA_ROOT = ''
+AWS_ACCESS_KEY_ID = "AKIAJN7P2XFTIBQBAINA"
+AWS_SECRET_ACCESS_KEY = "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"
 
 SECURE_SSL_REDIRECT = True
