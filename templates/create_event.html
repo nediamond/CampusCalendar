@@ -2,16 +2,6 @@
 
 {% block page_title %}Create Event{% endblock %}
 
-{% block default_style %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css">
-<style>
-    body {
-        background-color:#DAF0F6;
-        <!-- color:#217DC1; -->
-    }
-</style>
-{% endblock %}
-
 {% block page_style %}
     <style>
         .container {
@@ -35,7 +25,7 @@
 
 {% block content %}
     <div class="container col-md-12" style="background-color:#DAF0F6">
-    <div class="container col-md-6 offset-md-3">
+    <div class="container col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-xs-10 offset-xs-1">
         <h1 style="text-align:center">Create Event</h1>
         <form action="/create_event" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}

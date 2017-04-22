@@ -7,14 +7,14 @@
 
         {% block default_script %}
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         {% endblock %}
 
         {% block page_script %}
         {% endblock %}
 
         {% block default_style %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css">
         <style>
 			body {
 				background-color:#DAF0F6;
@@ -43,7 +43,7 @@
         {% block content %}
         {% endblock %}
 
-        <div class="text-center text-xs-center" style="margin-top:.7rem">
+        <div class="text-center text-xs-center col-xs-12" style="margin-top:.7rem">
             <a href="https://spikeball.com" style="color:#000000">
                 Powered by
                 <img src="{% static "campus_calendar/spikeball_banner.png" %}" style="height:auto;width:152px;">
