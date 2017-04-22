@@ -151,8 +151,8 @@ def edit_event(request, event_id):
         event.save()
 
         if 'graphic' in request.FILES and request.FILES['graphic']:
-            # if event.graphic:
-            #     event.graphic.delete()
+            if event.graphic:
+                event.graphic.delete()
 
             _, extension = os.path.splitext(request.FILES['graphic'].name)
             event.graphic.save(get_random_string(length=16)+extension, File(request.FILES['graphic']))
