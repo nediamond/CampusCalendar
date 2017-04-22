@@ -61,9 +61,7 @@
                     <input name="datetime" value="{{ event.datetime|date:"Y-m-d\TH:i" }}" type="datetime-local" class="form-control" id="datetime" required>
                     <br>
                     <label for="description"><h4>Description</h4></label>
-                    <textarea name="description" class="form-control" id="description" maxlength="500">
-                        {% if event.description %}{{ event.description }}{% endif %}
-                    </textarea>
+                    <textarea name="description" class="form-control" id="description" maxlength="500">{% if event.description %}{{ event.description }}{% endif %}</textarea>
                     <br>
                     <label for="graphic"><h4>Event Image</h4></label>
                     {% if event.graphic %}
