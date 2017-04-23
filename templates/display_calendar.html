@@ -21,8 +21,8 @@
             background-color:#FFFFFF;
             border-radius: 10px;
             padding-bottom:.2rem;
-            padding-right:2.5rem;
-            padding-left:2.5rem;
+            padding-right:2rem;
+            padding-left:2rem;
             margin-bottom:1.5rem;
         }
 
@@ -69,9 +69,14 @@
 
 {% block content %}
     {% for day,events in days %}
-        <div class="container col-md-8 offset-md-2">
-            <div class="day" data-toggle="collapse" data-target="#{{ day|date:"ndy" }}" aria-expanded="false" aria-controls="{{ day|date:"ndy" }}">
+        <div class="container col-md-8 offset-md-2 col-xs-10 offset-xs-1">
+        {# Desktop display #}
+            <div class="day hidden-xs-down" data-toggle="collapse" data-target="#{{ day|date:"ndy" }}" aria-expanded="false" aria-controls="{{ day|date:"ndy" }}">
                 <h2>{{ day|date:"l n/d"}}</h2>
+            </div>
+        {# Mobile display #}
+            <div class="day hidden-sm-up" data-toggle="collapse" data-target="#{{ day|date:"ndy" }}" aria-expanded="false" aria-controls="{{ day|date:"ndy" }}">
+                <h2>{{ day|date:"D n/d"}}</h2>
             </div>
             <div class="collapse" id="{{ day|date:"ndy" }}">
                 {% for event in events %}
