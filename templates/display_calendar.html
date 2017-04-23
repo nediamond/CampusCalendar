@@ -20,7 +20,7 @@
         .container {
             background-color:#FFFFFF;
             border-radius: 10px;
-            padding-bottom:1.5rem;
+            padding-bottom:.2rem;
             padding-right:2.5rem;
             padding-left:2.5rem;
             margin-bottom:1.5rem;
@@ -29,6 +29,16 @@
         .event-img img{
             border-radius: 5px;
             padding:1%;
+        }
+
+        h2 {
+
+            margin-bottom: 0;
+        }
+
+        .day {
+            padding-top: .9rem;
+            padding-bottom: .9rem;
         }
     </style>
 {% endblock %}
@@ -60,13 +70,14 @@
 {% block content %}
     {% for day,events in days %}
         <div class="container col-md-8 offset-md-2">
-            <br>
-            <h2>{{ day|date:"l n/d"}}</h2>
-            <br>
-            {% for event in events %}
-                {% include "event_component.html" with event=event %}
-            {% endfor %}
+            <div class="day" data-toggle="collapse" data-target="#{{ day|date:"ndy" }}" aria-expanded="false" aria-controls="{{ day|date:"ndy" }}">
+                <h2>{{ day|date:"l n/d"}}</h2>
+            </div>
+            <div class="collapse" id="{{ day|date:"ndy" }}">
+                {% for event in events %}
+                    {% include "event_component.html" with event=event %}
+                {% endfor %}
+            </div>
         </div>
-        <br>
     {% endfor %}
 {% endblock %}
