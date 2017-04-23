@@ -3,7 +3,7 @@
 <div class="card col-md-12" data-toggle="collapse" data-target="#description_{{ event.id }}" aria-expanded="false"
      aria-controls="description_{{ event.id }}">
     {% if event.graphic %}
-        <div class="card-block col-md-2 event-img" style="padding:.5rem 0 .5rem 0;">
+        <div class="card-block col-md-2 event-img" style="padding:.5rem 0 .5rem 0; text-align: center;">
             <img class="img-fluid" src="{{ MEDIA_URL }}{{ event.graphic.name }}"
                  onclick="window.location = '{{ MEDIA_URL }}{{ event.graphic.name }}';">
         </div>

@@ -17,7 +17,7 @@ from models import *
 def index(request):
     cid = request.session.get('cid', False)
     if not cid:
-        return campus_list(request)
+        return redirect('/campus_list/')
     return show_calendar(request, cid)
 
 
@@ -52,8 +52,7 @@ def show_calendar(request, campus_id):
     main_calendar = CampusCalendar.objects.filter(campus_id=campus_id).first()
     events = Event.objects.filter(calendar=main_calendar, datetime__gte=datetime.now()).order_by('datetime')
 
-    if not request.session.get('cid', False):
-        request.session['cid'] = campus_id
+    request.session['cid'] = campus_id
 
     days = defaultdict(list)
     for event in events:
