@@ -26,6 +26,13 @@
                 padding-left:.15rem;
                 padding-right:.15rem;
             }
+
+            .navbar-fixed-bottom {
+                background-color:#F1D00F;
+                text-align:center;
+                font-size:18.5pt;
+                padding:0;
+            }
 		</style>
         {% endblock %}
 
@@ -49,11 +56,9 @@
         {% block content %}
         {% endblock %}
 
-        <div class="text-center text-xs-center col-xs-12" style="margin-top:.7rem">
-            <a href="https://spikeball.com" style="color:#000000">
-                Powered by
-                <img src="{% static "campus_calendar/spikeball_banner.png" %}" style="height:auto;width:152px;">
-            </a>
-        </div>
+        <nav class="navbar navbar-fixed-bottom" onclick="window.open('https://spikeball.com')">
+            <b style="color:#000000">Powered by</b>
+            <img src="{% static "campus_calendar/spikeball_banner.png" %}" style="max-height:3.5rem;">
+        </nav>
 	</body>
 </html>
