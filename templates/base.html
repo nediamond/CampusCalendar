@@ -21,6 +21,11 @@
 				<!-- color:#217DC1; -->
 			}
 
+            .cc-title {
+                padding: .6rem .45rem .45rem .45rem;
+                margin-bottom:.85rem;
+                max-height:10.5rem;
+            }
             .button-bar {
                 margin-top:.4rem;
                 padding-left:.15rem;
@@ -49,12 +54,15 @@
                 <a href="/login/" class="btn btn-secondary" style="display: block;float:right;margin-right:10px;">Log In</a>
             {% endif %}
         </div>
-		<img src="{% static "campus_calendar/cc.png" %}" onclick="window.location='/'" class="mx-auto d-block img-fluid" style="padding:.6rem;max-height:10rem">
+		<img src="{% static "campus_calendar/cc.png" %}" onclick="window.location='/'" class="mx-auto d-block img-fluid cc-title">
         <h1 class="text-center" style="color:#20609f">{% block page_header %}{% endblock %}</h1>
 
 
         {% block content %}
         {% endblock %}
+
+        {# Spikeball banner padding#}
+        <div class="col-sm-12 col-xs-12" style="height:3.5rem;"></div>
 
         <nav class="navbar navbar-fixed-bottom" onclick="window.open('https://spikeball.com')">
             <b style="color:#000000">Powered by</b>
