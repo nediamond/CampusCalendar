@@ -50,6 +50,9 @@
                     <label for="datetime"><h4>Start Date/Time</h4></label>
                     <input name="datetime" value="{{ event.datetime|date:"Y-m-d\TH:i" }}" type="datetime-local" class="form-control" id="datetime" required>
                     <br>
+                    <label for="endtime"><h4>End Time</h4></label>
+                    <input name="endtime" value="{{ event.endtime|time:"H:i" }}" type="time" class="form-control" id="endtime" required>
+                    <br>
                     <label for="description"><h4>Description</h4></label>
                     <textarea name="description" class="form-control" id="description" maxlength="500">{% if event.description %}{{ event.description }}{% endif %}</textarea>
                     <br>

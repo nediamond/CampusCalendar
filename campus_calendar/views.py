@@ -103,14 +103,23 @@ def create_event(request):
 
         main_calendar = CampusCalendar.objects.filter(campus=org.campus).first()  # See calendar comment up there ^^
         event_dt = datetime.strptime(request.POST['datetime'], "%Y-%m-%dT%H:%M")
+        event_endt = datetime.strptime(request.POST['endtime'], "%H:%M")
 
-        new_event = Event(name=request.POST['name'],
-                          location=request.POST['location'],
-                          datetime=event_dt,
-                          calendar=main_calendar,
-                          organization=org,
-                          description=request.POST['description'])
-        new_event.save()
+        # Should handle this in a better/safer way, maybe use some js
+        if event_dt.time() < event_endt.time():
+            new_event = Event(name=request.POST['name'],
+                              location=request.POST['location'],
+                              datetime=event_dt,
+                              endtime=event_endt,
+                              calendar=main_calendar,
+                              organization=org,
+                              description=request.POST['description'])
+            new_event.save()
+        else:
+            orgs = Organization.objects.filter(administrators=request.user)
+            if len(orgs) < 1:
+                return HttpResponseForbidden()
+            return render(request, 'create_event.html', {'orgs': orgs})
 
         if 'graphic' in request.FILES:
             _, extension = os.path.splitext(request.FILES['graphic'].name)
@@ -141,21 +150,28 @@ def edit_event(request, event_id):
         if not org or request.user not in org.administrators.all() or not event:
             return HttpResponseForbidden()
 
-        event.name = request.POST['name']
-        event.location = request.POST['location']
-        event.datetime = datetime.strptime(request.POST['datetime'], "%Y-%m-%dT%H:%M")
-        event.organization = org
-        event.description = request.POST['description']
+        event_dt = datetime.strptime(request.POST['datetime'], "%Y-%m-%dT%H:%M")
+        event_endt = datetime.strptime(request.POST['endtime'], "%H:%M")
 
-        event.save()
+        # Should handle this in a better/safer way, maybe use some js
+        # Also needs an error message when this if statement is false
+        if event_dt.time() < event_endt.time():
+            event.name = request.POST['name']
+            event.location = request.POST['location']
+            event.datetime = event_dt
+            event.endtime = event_endt
+            event.organization = org
+            event.description = request.POST['description']
 
-        if 'graphic' in request.FILES and request.FILES['graphic']:
-            if event.graphic:
-                event.graphic.delete()
-
-            _, extension = os.path.splitext(request.FILES['graphic'].name)
-            event.graphic.save(get_random_string(length=16)+extension, File(request.FILES['graphic']))
             event.save()
+
+            if 'graphic' in request.FILES and request.FILES['graphic']:
+                if event.graphic:
+                    event.graphic.delete()
+
+                _, extension = os.path.splitext(request.FILES['graphic'].name)
+                event.graphic.save(get_random_string(length=16)+extension, File(request.FILES['graphic']))
+                event.save()
 
         return redirect('/event_manager/')
 

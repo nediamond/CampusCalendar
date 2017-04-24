@@ -25,9 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'fqqt$308&9&10(ogmu@(op3(ah4$u8r*^(+c)t$kit_7+wc)zt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['campuscalendar.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -126,9 +126,6 @@ USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
-
-# Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -153,4 +150,4 @@ MEDIA_ROOT = ''
 AWS_ACCESS_KEY_ID = "AKIAJN7P2XFTIBQBAINA"
 AWS_SECRET_ACCESS_KEY = "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"
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False

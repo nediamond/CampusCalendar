@@ -59,7 +59,7 @@
                     </td>
                     <td>{{ event.name }}</td>
                     <td>{{ event.organization.name }}</td>
-                    <td>{{ event.datetime|date:"N j, Y" }}<br>{{ event.datetime|date:"g:i a" }}</td>
+                    <td>{{ event.datetime|date:"N j, Y" }}<br>{{ event.datetime|date:"g:i a" }} - {{ event.endtime }}</td>
                     <td>{{ event.location }}</td>
                     <td>
                         {% if event.description %}

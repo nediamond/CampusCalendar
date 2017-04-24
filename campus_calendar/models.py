@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+import datetime as dt
 
 
 class Campus(models.Model):
@@ -36,7 +37,8 @@ class Organization(models.Model):
 
 class Event(models.Model):
     name = models.TextField(max_length=120, null=False, blank=False)
-    datetime = models.DateTimeField()
+    datetime = models.DateTimeField(null=False, blank=False)
+    endtime = models.TimeField(null=False, blank=False, default=dt.time(23, 59))
     location = models.TextField(max_length=250, null=False, blank=False) # Maybe a location-type specific field instead of text
     calendar = models.ForeignKey(CampusCalendar, unique=False)
     organization = models.ForeignKey(Organization, unique=False)
