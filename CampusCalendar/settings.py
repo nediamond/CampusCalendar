@@ -25,9 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'fqqt$308&9&10(ogmu@(op3(ah4$u8r*^(+c)t$kit_7+wc)zt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['campuscalendar.herokuapp.com']
 
 
 # Application definition
@@ -150,4 +150,4 @@ MEDIA_ROOT = ''
 AWS_ACCESS_KEY_ID = "AKIAJN7P2XFTIBQBAINA"
 AWS_SECRET_ACCESS_KEY = "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"
 
-SECURE_SSL_REDIRECT = False
+SECURE_SSL_REDIRECT = True
