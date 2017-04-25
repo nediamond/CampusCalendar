@@ -81,7 +81,7 @@
                 <h2 ></h2>
             </div>
         {# Mobile display #}
-            <div class="day hidden-sm-up" data-toggle="collapse" data-target="#{{ day|date:"ndy" }}" aria-expanded="false" aria-controls="{{ day|date:"ndy" }}">
+            <div class="day hidden-sm-up" style="cursor:pointer;" data-toggle="collapse" data-target="#{{ day|date:"ndy" }}" aria-expanded="false" aria-controls="{{ day|date:"ndy" }}">
                 <h3>{{ day|date:"l"}} <div style="display:inline-block;float:right;">{{ day|date:"n/d"}}</div></h3>
             </div>
             <div class="collapse" id="{{ day|date:"ndy" }}">
