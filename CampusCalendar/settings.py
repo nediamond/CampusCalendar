@@ -27,7 +27,7 @@ SECRET_KEY = 'fqqt$308&9&10(ogmu@(op3(ah4$u8r*^(+c)t$kit_7+wc)zt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['campuscalendar.herokuapp.com']
+ALLOWED_HOSTS = ['campuscalendar.herokuapp.com', 'campus-calendar.com']
 
 
 # Application definition
