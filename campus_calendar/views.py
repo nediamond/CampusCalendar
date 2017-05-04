@@ -50,7 +50,8 @@ def show_calendar(request, campus_id):
     # Not the best way to decide this, might need a 'main_calendar' field
     # Or maybe theres just one calendar per university in which case they can be the same object
     main_calendar = CampusCalendar.objects.filter(campus_id=campus_id).first()
-    events = Event.objects.filter(calendar=main_calendar, datetime__gte=datetime.now()).order_by('datetime')
+    #events = Event.objects.filter(calendar=main_calendar, datetime__gte=datetime.now()).order_by('datetime')
+    events = Event.objects.filter(calendar=main_calendar).order_by('datetime')
 
     request.session['cid'] = campus_id
 
