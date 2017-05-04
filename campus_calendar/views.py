@@ -72,8 +72,10 @@ def campus_list(request):
 
 @login_required
 def event_manager(request):
-    events = Event.objects.filter(organization__in=request.user.organization_set.all(),
-                                  datetime__gte=datetime.now()).order_by('datetime')
+    # events = Event.objects.filter(organization__in=request.user.organization_set.all(),
+    #                               datetime__gte=datetime.now()).order_by('datetime')
+    events = Event.objects.filter(organization__in=request.user.organization_set.all()).order_by('datetime')
+
     return render(request, 'event_manger.html', {'events':events})
 
 
