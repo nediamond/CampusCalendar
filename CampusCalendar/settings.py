@@ -153,3 +153,8 @@ AWS_SECRET_ACCESS_KEY = "ACioQnfoxr9PUvnmmho5oEATt5mZM2iI2mIk4DW0"
 
 # Todo: Need to get a cert for this!
 SECURE_SSL_REDIRECT = False
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
