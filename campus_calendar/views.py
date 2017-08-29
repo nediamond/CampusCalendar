@@ -15,10 +15,10 @@ from models import *
 
 # Root view, shows main calendar or campus select if no campus cookie set
 def index(request):
-    cid = request.session.get('cid', False)
-    if not cid:
-        return redirect('/campus_list/')
-    return show_calendar(request, cid)
+    # cid = request.session.get('cid', False)
+    # if not cid:
+    #     return redirect('/campus_list/')
+    return show_calendar(request, 1)  # 1 is UCSB ID, only one that matters atm
 
 
 # Login data submission (POST) view, redirects to root url
@@ -53,7 +53,7 @@ def show_calendar(request, campus_id):
     #events = Event.objects.filter(calendar=main_calendar, datetime__gte=datetime.now()).order_by('datetime')
     events = Event.objects.filter(calendar=main_calendar).order_by('datetime')
 
-    request.session['cid'] = campus_id
+    # request.session['cid'] = campus_id # Campus cookie only necessary when have multiple active campuses
 
     days = defaultdict(list)
     for event in events:
@@ -65,9 +65,9 @@ def show_calendar(request, campus_id):
     return render(request, 'display_calendar.html', {'calendar': main_calendar, 'days': days})
 
 
-def campus_list(request):
-    campuses = Campus.objects.all()
-    return render(request, 'campus_list.html', {'campuses':campuses})
+# def campus_list(request):
+#     campuses = Campus.objects.all()
+#     return render(request, 'campus_list.html', {'campuses':campuses})
 
 
 @login_required
