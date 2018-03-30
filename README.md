@@ -1,3 +1,3 @@
 # CampusCalendar
 
-campus-calendar.com
+http://campus-calendar.com
