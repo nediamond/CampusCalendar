@@ -147,8 +147,8 @@ AWS_STORAGE_BUCKET_NAME = "campuscalendar"
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 MEDIA_ROOT = ''
-AWS_ACCESS_KEY_ID = "AKIAJN7P2XFTIBQBAINA"
-AWS_SECRET_ACCESS_KEY = "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"
+AWS_ACCESS_KEY_ID = PUT KEY HERE
+AWS_SECRET_ACCESS_KEY = PUT KEY HERE
 
 
 # Todo: Need to get a cert for this!
